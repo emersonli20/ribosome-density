@@ -4,7 +4,7 @@ import numpy as np
 import numpy.ma as ma
 import argparse
 
-def get_coordinates(filename: str) -> list[tuple[float, float, float],...]:
+def get_coordinates(filename: str):
     coordinates = []
     with open(filename) as f:
         data = json.load(f)
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     coordinates_np = np.array(coordinate_list)
 
     theta = coordinates_np[:, 2]
-    d1 = coordinates_np[:, 0] - 341 * np.sin(np.deg2rad(theta))
+    d1 = coordinates_np[:, 0] - 341
     d2 = coordinates_np[:, 1] - 480
 
     z = d1 * np.cos(np.deg2rad(theta))
