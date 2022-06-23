@@ -23,7 +23,7 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
     lower = middle - interval
     upper = middle + interval
 
-    condition = (z>lower) & (z<upper)
+    condition = (z>=lower) & (z<=upper)
     projection = coordinates[condition]
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
@@ -31,6 +31,8 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
     plt.title("Membrane Projection")
     plt.xlabel("x")
     plt.ylabel("y")
+    txt = "Slices: [{}, {}]".format(lower, upper)
+    plt.figtext(0.5,0.01, txt)
     plt.show()
 
 
