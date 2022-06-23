@@ -162,14 +162,10 @@ if __name__ == "__main__":
     coordinate_list = get_coordinates(filename)
     coordinates_np = np.array(coordinate_list)
 
-    theta = coordinates_np[:, 2]
-    d1 = coordinates_np[:, 0] - 341
-    d2 = coordinates_np[:, 1] - 480
-
-    z = d1 * np.cos(np.deg2rad(theta))
-    x = d1 * np.sin(np.deg2rad(theta))
-    y = d2
-
+    x = coordinates_np[:, 0]
+    y = coordinates_np[:, 1]
+    z = coordinates_np[:, 2]
+  
     cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
     if (projection):
