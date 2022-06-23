@@ -25,10 +25,54 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
     lower = middle - interval
     upper = middle + interval
 
-    condition = (z>=lower) & (z<=upper)
-    projection = coordinates[condition]
+    z_condition = (z>=lower) & (z<=upper)
+    projection = coordinates[z_condition]
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
+
+    colors = ['b','g','r','c','m','y','b','g','r','c','m']
+    residuals = []
+    thetas ={}
+    for i, x_lower in enumerate([-300,-250,-200,-150,-100,-50,0,50,100,150,200]):
+        print(i)
+        x_upper = x_lower + 100
+        color = colors[i]
+        x_condition = (x_projection>=x_lower) & (x_projection<=x_upper)
+        x_slice = projection[x_condition]
+        
+        x_fit = x_slice[:,0]
+        # print(x_fit)
+        y_fit = x_slice[:,1]
+
+        # horizontal-opening parabola
+        theta,res,_,_,_ = np.polyfit(y_fit, x_fit, 2, full=True)
+        print("mse: {}".format(res))
+        residuals.append(res)
+        thetas[i] = theta
+    
+    residuals = [a[0] for a in residuals]
+    best_indices = np.argsort(residuals)[::-1][:2]
+    print(best_indices)
+    best_thetas = [thetas.get(i) for i in best_indices]
+
+    colors = ['b','g','r','c','m','y','b','g','r','c','m']
+    for i,theta in enumerate(best_thetas):
+        f = np.poly1d(theta)
+        color = colors[i]
+        # x_line = theta[2] + theta[1] * pow(y_fit, 1) + theta[0] * pow(y_fit, 2)
+        for y1 in np.linspace(-500,500,1000):
+            plt.plot(f(y1), y1, 'o{}'.format(color))
+
+    # plt.plot(x_line, y_range, 'r')
+
+    # vertical-opening parabola
+    # theta = np.polyfit(x_fit, y_fit, 2)
+    # print(theta)
+    # y_line = theta[2] + theta[1] * pow(x_fit, 1) + theta[0] * pow(x_fit, 2)
+    # plt.plot(x_fit, y_line, 'r')
+
+    plt.xlim(-300,300)
+    plt.ylim(-500,500)
     plt.scatter(x_projection,y_projection)
     plt.title("Membrane Projection")
     plt.xlabel("x")
