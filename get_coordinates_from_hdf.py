@@ -5,6 +5,24 @@ import h5py
 import argparse
 import json
 
+def get_coordinates(filename: str, threshold: int=5):
+    f = h5py.File(filename,'r')
+    m = f['MDF']
+    #PRINT(f.keys())
+    dataset = m['images']['0']['image']
+    arr = np.array(dataset)
+
+    arr = arr.reshape(352,-1)
+    df = pd.DataFrame(arr)
+    non_zero_indices = df[df>thresh].stack().index.tolist()
+    non_zero_coords = []
+    for value in non_zero_indices:
+        z = value[0]
+        y = value[1] // 686
+        x = value[1] - y * 686
+        non_zero_coords.append((x,y,z))
+    
+    return non_zero_coords
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

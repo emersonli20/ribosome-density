@@ -7,9 +7,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import get_coordinates_from_hdf
 
-def get_coordinates(filename: str):
-    coordinates = get_coordinates_from_hdf.get_coordinates(filename)
-
+def get_coordinates(filename: str, threshold: int=5):
+    coordinates = get_coordinates_from_hdf.get_coordinates(filename, threshold)
 
     return coordinates
 
@@ -154,9 +153,10 @@ if __name__ == "__main__":
 
     parser.add_argument("-p","--projection", help="Display projection of tomogram onto the xy plane", action="store_true")
     parser.add_argument("-s","--slice_3d", help="Display slice along z-axis in 3d", action="store_true")
-    parser.add_argument("--filename", help="Name of the json file containing the membrane coordinates", type=str, required=True)
+    parser.add_argument("--filename", help="Name of the hdf file containing the membrane coordinates", type=str, required=True)
     parser.add_argument("--middle_slice", help="Middle slice when looking at projection", type=int, default=150)
     parser.add_argument("--interval", help="Interval distance from middle slice when looking at projection", type=int, default=20)
+    parser.add_argument("-t","--threshold", type = int, help="threshold of color intensity, e.g.5", required = True)
 
     args = parser.parse_args()
 
@@ -165,8 +165,9 @@ if __name__ == "__main__":
     middle_slice = args.middle_slice
     interval = args.interval
     slice_3d = args.slice_3d
+    thresh = args.threshold
 
-    coordinate_list = get_coordinates(filename)
+    coordinate_list = get_coordinates(filename, thresh)
     coordinates_np = np.array(coordinate_list)
 
     x = coordinates_np[:, 0] - 341
