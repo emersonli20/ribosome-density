@@ -22,52 +22,52 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
 
     z_condition = (z>=lower) & (z<=upper)
     projection = coordinates[z_condition]
-    print(projection)
+    # print(projection)
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
 
-    colors = ['b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m']
-    residuals = []
-    thetas ={}
-    i = 0
-    for x_lower in [-300,-250,-200,-150,-100,-50,0,50,100,150,200]:
-        for interval in [100, 150, 200, 250]:
-            print(i)
-            x_upper = x_lower + interval
-            color = colors[i]
-            print(x_lower)
-            x_condition = (x_projection>=x_lower) & (x_projection<=x_upper)
-            print(x_condition)
-            x_slice = projection[x_condition]
+    # colors = ['b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m']
+    # residuals = []
+    # thetas ={}
+    # i = 0
+    # for x_lower in [-300,-250,-200,-150,-100,-50,0,50,100,150,200]:
+    #     for interval in [100, 150, 200, 250]:
+    #         print(i)
+    #         x_upper = x_lower + interval
+    #         color = colors[i]
+    #         print(x_lower)
+    #         x_condition = (x_projection>=x_lower) & (x_projection<=x_upper)
+    #         print(x_condition)
+    #         x_slice = projection[x_condition]
             
-            x_fit = x_slice[:,0]
-            # print(x_fit)
-            y_fit = x_slice[:,1]
+    #         x_fit = x_slice[:,0]
+    #         # print(x_fit)
+    #         y_fit = x_slice[:,1]
 
-            print(y_fit)
-            print(x_fit)
+    #         print(y_fit)
+    #         print(x_fit)
 
-            # horizontal-opening parabola
-            theta,res,_,_,_ = np.polyfit(y_fit, x_fit, 2, full=True)
-            print("mse: {}".format(res))
-            residuals.append(res)
-            thetas[i] = theta
+    #         # horizontal-opening parabola
+    #         theta,res,_,_,_ = np.polyfit(y_fit, x_fit, 2, full=True)
+    #         print("mse: {}".format(res))
+    #         residuals.append(res)
+    #         thetas[i] = theta
 
-            i += 1
+    #         i += 1
         
-    print("residuals: {}".format(residuals))
-    residuals = [a[0] for a in residuals]
-    print("residuals: {}".format(residuals))
-    best_indices = np.argsort(residuals)[::-1][:2]
-    print(best_indices)
-    best_thetas = [thetas.get(i) for i in best_indices]
+    # print("residuals: {}".format(residuals))
+    # residuals = [a[0] for a in residuals]
+    # print("residuals: {}".format(residuals))
+    # best_indices = np.argsort(residuals)[::-1][:2]
+    # print(best_indices)
+    # best_thetas = [thetas.get(i) for i in best_indices]
 
-    for j,theta in enumerate(best_thetas):
-        f = np.poly1d(theta)
-        color = colors[j]
-        # x_line = theta[2] + theta[1] * pow(y_fit, 1) + theta[0] * pow(y_fit, 2)
-        for y1 in np.linspace(-500,500,1000):
-            plt.plot(f(y1), y1, 'o{}'.format(color))
+    # for j,theta in enumerate(best_thetas):
+    #     f = np.poly1d(theta)
+    #     color = colors[j]
+    #     # x_line = theta[2] + theta[1] * pow(y_fit, 1) + theta[0] * pow(y_fit, 2)
+    #     for y1 in np.linspace(-500,500,1000):
+    #         plt.plot(f(y1), y1, 'o{}'.format(color))
 
     # plt.plot(x_line, y_range, 'r')
 
