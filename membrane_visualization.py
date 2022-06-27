@@ -7,6 +7,31 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import get_coordinates_from_hdf
 
+def membrane_distances(coordinates: np.array):
+    # TODO: find the subtracted matrix
+    subtracted = coordinates
+
+    slices = []
+    for i in range(0,n,3):
+        sliced = subtracted[:,i:i+3]
+        norm = np.linalg.norm(sliced,axis=1)
+        slices.append(norm)
+
+    distances = np.array(slices)
+    
+    return distances
+
+def get_coordinates_json(filename: str):
+    coordinates = []
+    with open(filename) as f:
+        data = json.load(f)
+
+    for point in data["boxes_3d"]:
+        coordinate = (point[0], point[1], point[2])
+        coordinates.append(coordinate)
+
+    return coordinates
+
 def get_coordinates(filename: str, threshold: float=5):
     coordinates = get_coordinates_from_hdf.get_coordinates(filename, threshold)
 
@@ -153,7 +178,8 @@ if __name__ == "__main__":
 
     parser.add_argument("-p","--projection", help="Display projection of tomogram onto the xy plane", action="store_true")
     parser.add_argument("-s","--slice_3d", help="Display slice along z-axis in 3d", action="store_true")
-    parser.add_argument("--filename", help="Name of the hdf file containing the membrane coordinates", type=str, required=True)
+    parser.add_argument("--filename", help="Name of the hdf file containing the membrane coordinates", type=str)
+    parser.add_argument("--filename_json", help="Name of the json file containing the membrane coordinates", type=str)
     parser.add_argument("--middle_slice", help="Middle slice when looking at projection", type=int, default=150)
     parser.add_argument("--interval", help="Interval distance from middle slice when looking at projection", type=int, default=20)
     parser.add_argument("-t","--threshold", type=float, help="threshold of color intensity, e.g.5", required = True)
@@ -162,24 +188,31 @@ if __name__ == "__main__":
 
     projection = args.projection
     filename = args.filename
+    filename_json = args.filename_json
     middle_slice = args.middle_slice
     interval = args.interval
     slice_3d = args.slice_3d
-    thresh = args.threshold
+    threshold = args.threshold
 
-    coordinate_list = get_coordinates(filename, thresh)
-    coordinates_np = np.array(coordinate_list)
+    # coordinate_list = get_coordinates(filename, threshold)
+    coordinate_list = get_coordinates_json(filename_json)
+    coordinates_np = np.array(coordinate_list, dtype="i,i,i")
+    print(coordinates_np)
+    print(coordinates_np.shape)
 
-    x = coordinates_np[:, 0] - 341
-    y = coordinates_np[:, 1] - 480
-    z = coordinates_np[:, 2]
+    # TODO: pass subtracted matrix into membrane_distances
+    distances = membrane_distances(coordinates_np)
+    # x = coordinates_np[:, 0] - 341
+    # y = coordinates_np[:, 1] - 480
+    # z = coordinates_np[:, 2]
   
-    cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
+    # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
-    if (projection):
-        graph_projection(cartesian_coordinates, middle_slice, interval)
-    elif (slice_3d):
-        graph_3d_slice(cartesian_coordinates, middle_slice, interval)
-    else:
-        graph_3d(x,y,z)
+
+    # if (projection):
+    #     graph_projection(cartesian_coordinates, middle_slice, interval)
+    # elif (slice_3d):
+    #     graph_3d_slice(cartesian_coordinates, middle_slice, interval)
+    # else:
+    #     graph_3d(x,y,z)
 
