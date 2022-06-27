@@ -3,6 +3,7 @@ import tables
 import numpy as np
 import h5py
 import argparse
+import json
 
 
 if __name__ == "__main__":
@@ -21,7 +22,7 @@ m = f['MDF']
 #PRINT(f.keys())
 dataset = m['images']['0']['image']
 arr = np.array(dataset)
-#print(arr.shape)
+
 arr = arr.reshape(352,-1)
 df = pd.DataFrame(arr)
 non_zero_indices = df[df>thresh].stack().index.tolist()
@@ -31,5 +32,10 @@ for value in non_zero_indices:
 	y = value[1] // 686;
 	x = value[1] - y * 686;
 	non_zero_coords.append((x,y,z));
-#print(non_zero_coords);
-print(len(non_zero_coords))
+
+
+jsonString = json.dumps(non_zero_coords);
+jsonFile = open("coords.json","w");
+jsonFile.write(jsonString);
+jsonFile.close()
+
