@@ -5,7 +5,7 @@ import h5py
 import argparse
 import json
 
-def get_coordinates(filename: str, threshold: int=5):
+def get_coordinates(filename: str, threshold: float=5):
     f = h5py.File(filename,'r')
     m = f['MDF']
     #PRINT(f.keys())
@@ -27,9 +27,8 @@ def get_coordinates(filename: str, threshold: int=5):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-f","--filename", type = str, help="name of the segmentation with h5 extension", required = True)
-    parser.add_argument("-t","--threshold", type = int, help="threshold of color intensity, e.g.5", required = True)
-   
+    parser.add_argument("-f","--filename", type=str, help="name of the segmentation with h5 extension", required = True)
+    parser.add_argument("-t","--threshold", type=float, help="threshold of color intensity, e.g.5", required = True)
     args = parser.parse_args()
 
     filename = args.filename

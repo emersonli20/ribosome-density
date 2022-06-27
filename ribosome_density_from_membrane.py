@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import get_coordinates_from_hdf
 
-def get_coordinates(filename: str, threshold: int=5):
+def get_coordinates(filename: str, threshold: float=5):
     coordinates = get_coordinates_from_hdf.get_coordinates(filename, threshold)
 
     return coordinates
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     parser.add_argument("--filename", help="Name of the hdf file containing the membrane coordinates", type=str, required=True)
     parser.add_argument("--middle_slice", help="Middle slice when looking at projection", type=int, default=150)
     parser.add_argument("--interval", help="Interval distance from middle slice when looking at projection", type=int, default=20)
-    parser.add_argument("-t","--threshold", type = int, help="threshold of color intensity, e.g.5", required = True)
+    parser.add_argument("-t","--threshold", type=float, help="threshold of color intensity, e.g.5", required = True)
 
     args = parser.parse_args()
 
