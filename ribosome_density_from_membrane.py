@@ -5,15 +5,11 @@ import numpy.ma as ma
 import argparse
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+import get_coordinates_from_hdf
 
 def get_coordinates(filename: str):
-    coordinates = []
-    with open(filename) as f:
-        data = json.load(f)
-    
-    for point in data["boxes_3d"]:
-        coordinate = [point[0], point[1], point[2]]
-        coordinates.append(coordinate)
+    coordinates = get_coordinates_from_hdf.get_coordinates(filename)
+
 
     return coordinates
 
@@ -27,38 +23,49 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
 
     z_condition = (z>=lower) & (z<=upper)
     projection = coordinates[z_condition]
+    print(projection)
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
 
-    colors = ['b','g','r','c','m','y','b','g','r','c','m']
+    colors = ['b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m']
     residuals = []
     thetas ={}
-    for i, x_lower in enumerate([-300,-250,-200,-150,-100,-50,0,50,100,150,200]):
-        print(i)
-        x_upper = x_lower + 100
-        color = colors[i]
-        x_condition = (x_projection>=x_lower) & (x_projection<=x_upper)
-        x_slice = projection[x_condition]
-        
-        x_fit = x_slice[:,0]
-        # print(x_fit)
-        y_fit = x_slice[:,1]
+    i = 0
+    for x_lower in [-300,-250,-200,-150,-100,-50,0,50,100,150,200]:
+        for interval in [100, 150, 200, 250]:
+            print(i)
+            x_upper = x_lower + interval
+            color = colors[i]
+            print(x_lower)
+            x_condition = (x_projection>=x_lower) & (x_projection<=x_upper)
+            print(x_condition)
+            x_slice = projection[x_condition]
+            
+            x_fit = x_slice[:,0]
+            # print(x_fit)
+            y_fit = x_slice[:,1]
 
-        # horizontal-opening parabola
-        theta,res,_,_,_ = np.polyfit(y_fit, x_fit, 2, full=True)
-        print("mse: {}".format(res))
-        residuals.append(res)
-        thetas[i] = theta
-    
+            print(y_fit)
+            print(x_fit)
+
+            # horizontal-opening parabola
+            theta,res,_,_,_ = np.polyfit(y_fit, x_fit, 2, full=True)
+            print("mse: {}".format(res))
+            residuals.append(res)
+            thetas[i] = theta
+
+            i += 1
+        
+    print("residuals: {}".format(residuals))
     residuals = [a[0] for a in residuals]
+    print("residuals: {}".format(residuals))
     best_indices = np.argsort(residuals)[::-1][:2]
     print(best_indices)
     best_thetas = [thetas.get(i) for i in best_indices]
 
-    colors = ['b','g','r','c','m','y','b','g','r','c','m']
-    for i,theta in enumerate(best_thetas):
+    for j,theta in enumerate(best_thetas):
         f = np.poly1d(theta)
-        color = colors[i]
+        color = colors[j]
         # x_line = theta[2] + theta[1] * pow(y_fit, 1) + theta[0] * pow(y_fit, 2)
         for y1 in np.linspace(-500,500,1000):
             plt.plot(f(y1), y1, 'o{}'.format(color))
@@ -162,8 +169,8 @@ if __name__ == "__main__":
     coordinate_list = get_coordinates(filename)
     coordinates_np = np.array(coordinate_list)
 
-    x = coordinates_np[:, 0]
-    y = coordinates_np[:, 1]
+    x = coordinates_np[:, 0] - 341
+    y = coordinates_np[:, 1] - 480
     z = coordinates_np[:, 2]
   
     cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])

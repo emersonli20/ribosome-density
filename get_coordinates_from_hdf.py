@@ -26,16 +26,16 @@ arr = np.array(dataset)
 arr = arr.reshape(352,-1)
 df = pd.DataFrame(arr)
 non_zero_indices = df[df>thresh].stack().index.tolist()
-non_zero_coords = [];
+non_zero_coords = []
 for value in non_zero_indices:
-	z = value[0];
-	y = value[1] // 686;
-	x = value[1] - y * 686;
-	non_zero_coords.append((x,y,z));
+	z = value[0]
+	y = value[1] // 686
+	x = value[1] - y * 686
+	non_zero_coords.append((x,y,z))
 
 
-jsonString = json.dumps(non_zero_coords);
-jsonFile = open("coords.json","w");
-jsonFile.write(jsonString);
+jsonString = json.dumps(non_zero_coords)
+jsonFile = open("coords.json","w")
+jsonFile.write(jsonString)
 jsonFile.close()
 
