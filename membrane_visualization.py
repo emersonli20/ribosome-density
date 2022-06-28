@@ -12,14 +12,21 @@ def membrane_distances(coordinates: np.array):
     subtracted = coordinates
 
     slices = []
-    for i in range(0,n,3):
+    for i in range(0,3*n,3):
         sliced = subtracted[:,i:i+3]
         norm = np.linalg.norm(sliced,axis=1)
         slices.append(norm)
-
+    print(len(slices))
     distances = np.array(slices)
     
     return distances
+
+def distance_filter(distances: np.array, radius: float, threshold = float):
+    distances[distances > radius] = 0
+    count_matrix = np.count_nonzero(distances, axis=0)
+    boolean_array = count_matrix > threshold
+    return boolean_array
+    
 
 def get_coordinates_json(filename: str):
     coordinates = []
@@ -149,7 +156,6 @@ def set_axes_equal(ax):
     '''Make axes of 3D plot have equal scale so that spheres appear as spheres,
     cubes as cubes, etc..  This is one possible solution to Matplotlib's
     ax.set_aspect('equal') and ax.axis('equal') not working for 3D.
-
     Input
       ax: a matplotlib axis, e.g., as output from plt.gca().
     '''
@@ -195,13 +201,28 @@ if __name__ == "__main__":
     threshold = args.threshold
 
     # coordinate_list = get_coordinates(filename, threshold)
-    coordinate_list = get_coordinates_json(filename_json)
-    coordinates_np = np.array(coordinate_list, dtype="i,i,i")
-    print(coordinates_np)
-    print(coordinates_np.shape)
+
+    coordinate_list = get_coordinates(filename, threshold)
+    n = len(coordinate_list)
+    #print(n)
+
+    coordinates_np = np.array(coordinate_list)
+    #dtype= "i,i,i")
+
+    mat_1 = np.tile(coordinates_np, n)
+    mat_2 = coordinates_np.reshape(1,n*3, order = 'C');
+    mat_2 = np.tile(mat_2, (n,1))
+    mat_diff = mat_1 - mat_2
+
 
     # TODO: pass subtracted matrix into membrane_distances
-    distances = membrane_distances(coordinates_np)
+    distances = membrane_distances(mat_diff)
+    print(distance_filter(distances, 10, 20))
+    # x = coordinates_np[:, 0] - 341
+    # y = coordinates_np[:, 1] - 480
+    # z = coordinates_np[:, 2]
+  
+    # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
     boolean_array = distance_filter()
     coordinates_np = coordinates_np[boolean_array, :]
@@ -225,3 +246,16 @@ if __name__ == "__main__":
     else:
         graph_3d(x,y,z)
 
+
+
+
+
+
+
+
+
+
+
+
+
+	
