@@ -241,7 +241,7 @@ if __name__ == "__main__":
   
     # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
-    boolean_array = distance_filter(distances, 1000, 0)
+    boolean_array = distance_filter(distances, 1000, 20)
     coordinates_filtered = coordinates_np[boolean_array, :]
     discarded = coordinates_np[np.logical_not(boolean_array), :]
 
