@@ -21,6 +21,13 @@ def membrane_distances(coordinates: np.array):
     
     return distances
 
+def distance_filter(distances: np.array, radius: float, threshold = float):
+    distances[distances > radius] = 0
+    count_matrix = np.count_nonzero(distances, axis=0)
+    boolean_array = count_matrix > threshold
+    return boolean_array
+    
+
 def get_coordinates_json(filename: str):
     coordinates = []
     with open(filename) as f:
@@ -197,7 +204,7 @@ if __name__ == "__main__":
 
     coordinate_list = get_coordinates(filename, threshold)
     n = len(coordinate_list)
-    print(n)
+    #print(n)
 
     coordinates_np = np.array(coordinate_list)
     #dtype= "i,i,i")
@@ -210,9 +217,7 @@ if __name__ == "__main__":
 
     # TODO: pass subtracted matrix into membrane_distances
     distances = membrane_distances(mat_diff)
-    print(distances.shape)
-    print(distances[:10,:10])
-
+    print(distance_filter(distances, 10, 20))
     # x = coordinates_np[:, 0] - 341
     # y = coordinates_np[:, 1] - 480
     # z = coordinates_np[:, 2]
@@ -226,3 +231,17 @@ if __name__ == "__main__":
     #     graph_3d_slice(cartesian_coordinates, middle_slice, interval)
     # else:
     #     graph_3d(x,y,z)
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
