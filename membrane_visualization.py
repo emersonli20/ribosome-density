@@ -149,7 +149,6 @@ def graph_3d_slice(coordinates: np.array, coordinates_discard : np.array, middle
     fig = plt.figure()
     plt.xlim(-300,300)
     plt.ylim(-500,500)
-    plt.zlim(-200,200)
     ax = plt.axes(projection="3d")
     ax.scatter3D(x_projection, y_projection, z, s=5, c='b')
     ax.scatter3D(x_discard_projection, y_discard_projection, z, s=5, c='r')
@@ -164,7 +163,6 @@ def graph_3d(x: np.array, y: np.array, z: np.array, x_discard: np.array, y_disca
     fig = plt.figure()
     plt.xlim(-300,300)
     plt.ylim(-500,500)
-    plt.zlim(-200,200)
     ax = plt.axes(projection="3d")
     ax.scatter3D(x, y, z, s=5, c='b')
     ax.scatter3D(x_discard, y_discard, z_discard, s=5, c='r')
@@ -243,7 +241,7 @@ if __name__ == "__main__":
   
     # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
-    boolean_array = distance_filter(distances, 10, 0)
+    boolean_array = distance_filter(distances, 1000, 0)
     coordinates_filtered = coordinates_np[boolean_array, :]
     discarded = coordinates_np[np.logical_not(boolean_array), :]
 
