@@ -209,6 +209,9 @@ if __name__ == "__main__":
     parser.add_argument("--middle_slice", help="Middle slice when looking at projection", type=int, default=150)
     parser.add_argument("--interval", help="Interval distance from middle slice when looking at projection", type=int, default=20)
     parser.add_argument("-t","--threshold", type=float, help="threshold of color intensity, e.g.5", required = True)
+    parser.add_argument("-r","--radius", type=float, help="radius for denoising threshold", required = True)
+    parser.add_argument("-d","denoise_threshold", type=float, help="denoise threshold; i.e., number of particles within radius", required=True)
+
 
     args = parser.parse_args()
 
@@ -219,6 +222,8 @@ if __name__ == "__main__":
     interval = args.interval
     slice_3d = args.slice_3d
     threshold = args.threshold
+    radius = args.radius
+    denoise_threshold = args.denoise_threshold
 
     # coordinate_list = get_coordinates(filename, threshold)
 
@@ -230,7 +235,7 @@ if __name__ == "__main__":
     #dtype= "i,i,i")
 
     mat_1 = np.tile(coordinates_np, n)
-    mat_2 = coordinates_np.reshape(1,n*3, order = 'C');
+    mat_2 = coordinates_np.reshape((1,n*3),order='C');
     mat_2 = np.tile(mat_2, (n,1))
     mat_diff = mat_1 - mat_2
 
@@ -241,7 +246,7 @@ if __name__ == "__main__":
   
     # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
-    boolean_array = distance_filter(distances, 1000, 20)
+    boolean_array = distance_filter(distances, radius, denoise_threshold)
     coordinates_filtered = coordinates_np[boolean_array, :]
     discarded = coordinates_np[np.logical_not(boolean_array), :]
 
@@ -261,17 +266,3 @@ if __name__ == "__main__":
         graph_3d_slice(coordinates, coordinates_discard, middle_slice, interval)
     else:
         graph_3d(x,y,z,x_discard, y_discard, z_discard)
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
