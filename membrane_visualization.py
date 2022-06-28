@@ -202,17 +202,26 @@ if __name__ == "__main__":
 
     # TODO: pass subtracted matrix into membrane_distances
     distances = membrane_distances(coordinates_np)
-    # x = coordinates_np[:, 0] - 341
-    # y = coordinates_np[:, 1] - 480
-    # z = coordinates_np[:, 2]
+
+    boolean_array = distance_filter()
+    coordinates_np = coordinates_np[boolean_array, :]
+    discarded = coordinates_np[np.logical_not(boolean_array), :]
+
+    x = coordinates_np[:, 0] - 341
+    y = coordinates_np[:, 1] - 480
+    z = coordinates_np[:, 2]
   
-    # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
+    x_discard = discarded[:, 0] - 341
+    y_discard = discarded[:, 1] - 480
+    z_discard = discarded[:, 2]
+    cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
+    cartesian_coordinates_discard = np.hstack([x_discard[:,None],y_discard[:,None],z_discard[:,None]])
 
-
-    # if (projection):
-    #     graph_projection(cartesian_coordinates, middle_slice, interval)
-    # elif (slice_3d):
-    #     graph_3d_slice(cartesian_coordinates, middle_slice, interval)
-    # else:
-    #     graph_3d(x,y,z)
+    if (projection):
+        graph_projection(cartesian_coordinates, middle_slice, interval)
+        graph_projection(cartesian_coordinates_discard, middle_slice, interval)
+    elif (slice_3d):
+        graph_3d_slice(cartesian_coordinates, middle_slice, interval)
+    else:
+        graph_3d(x,y,z)
 
