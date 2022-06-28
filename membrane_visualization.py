@@ -44,19 +44,24 @@ def get_coordinates(filename: str, threshold: float=5):
 
     return coordinates
 
-def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
+def graph_projection(coordinates: np.array, coordinates_discard: np.array, middle: int=150, interval: int=20):
     x = coordinates[:,0]
     y = coordinates[:,1]
     z = coordinates[:,2]
+    z_discard = coordinates_discard[:,2]
 
     lower = middle - interval
     upper = middle + interval
 
     z_condition = (z>=lower) & (z<=upper)
+    z_discard_condition = (z_discard>=lower) & (z_discard<=upper)
     projection = coordinates[z_condition]
+    discard_projection = coordinates_discard[z_discard_condition]
     # print(projection)
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
+    x_discard_projection = discard_projection[:,0]
+    y_discard_projection = discard_projection[:,1]
 
     # colors = ['b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m''b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m','b','g','r','c','m','y','b','g','r','c','m']
     # residuals = []
@@ -111,7 +116,8 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
 
     plt.xlim(-300,300)
     plt.ylim(-500,500)
-    plt.scatter(x_projection,y_projection)
+    plt.scatter(x_projection,y_projection, s=5, c='b')
+    plt.scatter(x_discard_projection, y_discard_projection, s=5, c='r')
     plt.title("Membrane Projection")
     plt.xlabel("x")
     plt.ylabel("y")
@@ -119,22 +125,34 @@ def graph_projection(coordinates: np.array, middle: int=150, interval: int=20):
     plt.figtext(0.5,0.01, txt)
     plt.show()
 
-def graph_3d_slice(coordinates: np.array, middle: int=150, interval: int=20):
+def graph_3d_slice(coordinates: np.array, coordinates_discard : np.array, middle: int=150, interval: int=20):
     x = coordinates[:,0]
     y = coordinates[:,1]
     z = coordinates[:,2]
+    x_discard = coordinates_discard[:,0]
+    y_discard = coordinates_discard[:,1]
+    z_discard = coordinates_discard[:,2]
 
     lower = middle - interval
     upper = middle + interval
 
     condition = (z>=lower) & (z<=upper)
     projection = coordinates[condition]
+    discard_projection = coordinates_discard[condition]
     x_projection = projection[:, 0]
     y_projection = projection[:, 1]
+
+    x_discard_projection = discard_projection[:,0]
+    y_discard_projection = discard_projection[:,1]
+
     z = projection[:,2]
     fig = plt.figure()
+    plt.xlim(-300,300)
+    plt.ylim(-500,500)
+    plt.zlim(-200,200)
     ax = plt.axes(projection="3d")
-    ax.scatter3D(x_projection, y_projection, z, s=10)
+    ax.scatter3D(x_projection, y_projection, z, s=5, c='b')
+    ax.scatter3D(x_discard_projection, y_discard_projection, z, s=5, c='r')
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
@@ -142,10 +160,14 @@ def graph_3d_slice(coordinates: np.array, middle: int=150, interval: int=20):
     plt.title("Membrane 3d")
     plt.show()
 
-def graph_3d(x: np.array, y: np.array, z: np.array):
+def graph_3d(x: np.array, y: np.array, z: np.array, x_discard: np.array, y_discard: np.array, z_discard: np.array):
     fig = plt.figure()
+    plt.xlim(-300,300)
+    plt.ylim(-500,500)
+    plt.zlim(-200,200)
     ax = plt.axes(projection="3d")
-    ax.scatter3D(x, y, z, s=10)
+    ax.scatter3D(x, y, z, s=5, c='b')
+    ax.scatter3D(x_discard, y_discard, z_discard, s=5, c='r')
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
@@ -217,34 +239,30 @@ if __name__ == "__main__":
 
     # TODO: pass subtracted matrix into membrane_distances
     distances = membrane_distances(mat_diff)
-    print(distance_filter(distances, 10, 20))
-    # x = coordinates_np[:, 0] - 341
-    # y = coordinates_np[:, 1] - 480
-    # z = coordinates_np[:, 2]
+
   
     # cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
 
-    boolean_array = distance_filter()
-    coordinates_np = coordinates_np[boolean_array, :]
+    boolean_array = distance_filter(distances, 10, 0)
+    coordinates_filtered = coordinates_np[boolean_array, :]
     discarded = coordinates_np[np.logical_not(boolean_array), :]
 
-    x = coordinates_np[:, 0] - 341
-    y = coordinates_np[:, 1] - 480
-    z = coordinates_np[:, 2]
+    x = coordinates_filtered[:, 0] - 341
+    y = coordinates_filtered[:, 1] - 480
+    z = coordinates_filtered[:, 2]
   
     x_discard = discarded[:, 0] - 341
     y_discard = discarded[:, 1] - 480
     z_discard = discarded[:, 2]
-    cartesian_coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
-    cartesian_coordinates_discard = np.hstack([x_discard[:,None],y_discard[:,None],z_discard[:,None]])
+    coordinates = np.hstack([x[:,None],y[:,None],z[:,None]])
+    coordinates_discard = np.hstack([x_discard[:,None],y_discard[:,None],z_discard[:,None]])
 
     if (projection):
-        graph_projection(cartesian_coordinates, middle_slice, interval)
-        graph_projection(cartesian_coordinates_discard, middle_slice, interval)
+        graph_projection(coordinates, coordinates_discard, middle_slice, interval)
     elif (slice_3d):
-        graph_3d_slice(cartesian_coordinates, middle_slice, interval)
+        graph_3d_slice(coordinates, coordinates_discard, middle_slice, interval)
     else:
-        graph_3d(x,y,z)
+        graph_3d(x,y,z,x_discard, y_discard, z_discard)
 
 
 
