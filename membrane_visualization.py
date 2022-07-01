@@ -210,7 +210,7 @@ if __name__ == "__main__":
     parser.add_argument("--interval", help="Interval distance from middle slice when looking at projection", type=int, default=20)
     parser.add_argument("-t","--threshold", type=float, help="threshold of color intensity, e.g.5", required = True)
     parser.add_argument("-r","--radius", type=float, help="radius for denoising threshold", required = True)
-    parser.add_argument("-d","denoise_threshold", type=float, help="denoise threshold; i.e., number of particles within radius", required=True)
+    parser.add_argument("-d","--denoise_threshold", type=float, help="denoise threshold; i.e., number of particles within radius", required=True)
 
 
     args = parser.parse_args()
