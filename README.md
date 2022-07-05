@@ -8,6 +8,7 @@ To view usage instructions:
 ```
 python ribosome_density.py --help
 ```
+* Input the name of the tomogram, must have star file in directory
 * Input an x, y, z coordinate in angstroms
 * Input a radius in angstroms
 * Outputs the number of ribosomes within the given radius of the given coordinate
@@ -22,6 +23,14 @@ python ribosome_density_from_membrane.py --help
   * Graph in 3d
   * Graph slice in 3d with respect to z-axis
   * Graph projection onto xy plane
+  
+## compute_average_densities
+To view usage instructions:
+```
+python compute_average_densities.py --help
+```
+* Input the name of the tomogram, must have star file in directory
+* Input a csv file containing membrane coordinates, obtained from Matlab
 
 ## Examples
 ### 3d Membrane Example
