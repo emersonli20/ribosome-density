@@ -7,17 +7,19 @@ if __name__ == "__main__":
 
     parser.add_argument("--tomogram", help="The name of the tomogram, contains ribosome data; e.g., 5913-2_L2_ts003", type=str, required=True)
     parser.add_argument("--radius", help="The radius of the sphere", type=float, required=True)
+    parser.add_argument("-m", "--membrane_coordinates", help="The csv file containing membrane coordinates", type=str, required=True)
 
     args = parser.parse_args()
 
     tomogram = args.tomogram
     radius = args.radius
+    membrane_coordinates = args.membrane_coordinates
 
     # get ribosome coordinates
-    coordinates = ribosome_density.get_coordinates(tomogram)
+    coordinates = ribosome_density.get_coordinates_json(tomogram)
 
     # shells_coords: shape is (# points per shell, 3 * # shells)
-    shells_coords_input = np.loadtxt("shells_coords.csv", delimiter=",")
+    shells_coords_input = np.loadtxt(membrane_coordinates, delimiter=",")
     n, m = shells_coords_input.shape
     num_shells = int(m/3)
 
@@ -29,3 +31,5 @@ if __name__ == "__main__":
         shell = list(map(tuple, shells_coords[i]))
         shell_density = ribosome_density.average_density(shell, coordinates, radius)
         avg_densities.append(shell_density)
+
+    print(avg_densities)

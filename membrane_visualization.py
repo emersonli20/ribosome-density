@@ -7,7 +7,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import get_coordinates_from_hdf
 
-def membrane_distances(coordinates: np.array):
+def membrane_distances(coordinates: np.ndarray):
     # TODO: find the subtracted matrix
     subtracted = coordinates
 
@@ -21,7 +21,7 @@ def membrane_distances(coordinates: np.array):
     
     return distances
 
-def distance_filter(distances: np.array, radius: float, threshold = float):
+def distance_filter(distances: np.ndarray, radius: float, threshold = float):
     distances[distances > radius] = 0
     count_matrix = np.count_nonzero(distances, axis=0)
     boolean_array = count_matrix > threshold
@@ -44,7 +44,7 @@ def get_coordinates(filename: str, threshold: float=5):
 
     return coordinates
 
-def graph_projection(coordinates: np.array, coordinates_discard: np.array, middle: int=150, interval: int=20):
+def graph_projection(coordinates: np.ndarray, coordinates_discard: np.ndarray, middle: int=150, interval: int=20):
     x = coordinates[:,0]
     y = coordinates[:,1]
     z = coordinates[:,2]
@@ -125,7 +125,7 @@ def graph_projection(coordinates: np.array, coordinates_discard: np.array, middl
     plt.figtext(0.5,0.01, txt)
     plt.show()
 
-def graph_3d_slice(coordinates: np.array, coordinates_discard : np.array, middle: int=150, interval: int=20):
+def graph_3d_slice(coordinates: np.ndarray, coordinates_discard : np.ndarray, middle: int=150, interval: int=20):
     x = coordinates[:,0]
     y = coordinates[:,1]
     z = coordinates[:,2]
@@ -159,7 +159,7 @@ def graph_3d_slice(coordinates: np.array, coordinates_discard : np.array, middle
     plt.title("Membrane 3d")
     plt.show()
 
-def graph_3d(x: np.array, y: np.array, z: np.array, x_discard: np.array, y_discard: np.array, z_discard: np.array):
+def graph_3d(x: np.ndarray, y: np.ndarray, z: np.ndarray, x_discard: np.ndarray, y_discard: np.ndarray, z_discard: np.ndarray):
     fig = plt.figure()
     plt.xlim(-300,300)
     plt.ylim(-500,500)
@@ -237,7 +237,7 @@ if __name__ == "__main__":
     mat_1 = np.tile(coordinates_np, n)
     mat_2 = coordinates_np.reshape((1,n*3),order='C');
     mat_2 = np.tile(mat_2, (n,1))
-    mat_diff = mat_1 - mat_2
+    mat_diff = np.subtract(mat_1, mat_2)
 
 
     # TODO: pass subtracted matrix into membrane_distances

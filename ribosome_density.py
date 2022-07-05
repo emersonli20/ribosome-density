@@ -3,6 +3,7 @@ from numpy.linalg import norm
 from numpy import subtract
 import numpy as np
 import argparse
+import json
 
 def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
     list_of_coordinates = []
@@ -22,6 +23,17 @@ def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
                 list_of_coordinates.append((x,y,z))
         f.close()
     return list_of_coordinates
+
+def get_coordinates_json(filename: str):
+    coordinates = []
+    with open(filename) as f:
+        data = json.load(f)
+
+    for point in data["boxes_3d"]:
+        coordinate = (point[0], point[1], point[2])
+        coordinates.append(coordinate)
+
+    return coordinates
 
 def get_distance(c1: tuple[float, float, float], c2: tuple[float, float, float]) -> np.floating:
     return norm(subtract(c1, c2))
@@ -45,7 +57,7 @@ def average_density(points_of_interest: list[tuple[float,float,float]], list_of_
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--tomogram", help="The name of the tomogram; e.g., 5913-2_L2_ts003", type=str, required=True)
+    parser.add_argument("--tomogram", help="The name of the tomogram; e.g., 5913-2_L2_ts003, json", type=str, required=True)
     parser.add_argument("--x", help="The x coordinate of the point", type=float, required=True)
     parser.add_argument("--y", help="The y coordinate of the point", type=float, required=True)
     parser.add_argument("--z", help="The z coordinate of the point", type=float, required=True)
@@ -61,7 +73,7 @@ if __name__ == "__main__":
 
     point_of_interest = (x,y,z)
 
-    coordinates = get_coordinates(tomogram)
+    coordinates = get_coordinates_json(tomogram)
     counter, distances = get_density(point_of_interest, coordinates, radius)
     print("counter: {}\n".format(counter))
     print("distances: {}\n".format(distances))
