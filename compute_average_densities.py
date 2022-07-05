@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     print("Before getting coordinates")
     # get ribosome coordinates
-    coordinates = ribosome_density.get_coordinates(tomogram)
+    ribosome_coordinates = ribosome_density.get_coordinates(tomogram)
     print("After getting coordinates")
 
     # shells_coords: shape is (# points per shell, 3 * # shells)
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     for i in range(num_shells):
         print("Shell {}".format(i))
         shell = list(map(tuple, shells_coords[i]))
-        shell_density = ribosome_density.average_density(shell, coordinates, radius)
+        shell_density = ribosome_density.average_density(shell, ribosome_coordinates, radius)
         avg_densities.append(shell_density)
         print(avg_densities)
     print("After getting avg_densities")

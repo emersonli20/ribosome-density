@@ -18,8 +18,8 @@ def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
             while ("" in words):
                 words.remove("")         
             if tomogram in line:
-                x = eval(words[0])
-                y = eval(words[1])
+                x = eval(words[0]) - 341
+                y = eval(words[1]) - 480
                 z = eval(words[2])
                 list_of_coordinates.append((x,y,z))
         f.close()
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     start = timeit.default_timer()
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--tomogram", help="The name of the tomogram; e.g., 5913-2_L2_ts003, json", type=str, required=True)
+    parser.add_argument("--tomogram", help="The name of the tomogram; e.g., 5913-2_L2_ts003", type=str, required=True)
     parser.add_argument("--x", help="The x coordinate of the point", type=float, required=True)
     parser.add_argument("--y", help="The y coordinate of the point", type=float, required=True)
     parser.add_argument("--z", help="The z coordinate of the point", type=float, required=True)
