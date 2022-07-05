@@ -1,8 +1,10 @@
 import ribosome_density
 import numpy as np
 import argparse
+import timeit
 
 if __name__ == "__main__":
+    start = timeit.default_timer()
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--tomogram", help="The name of the tomogram, contains ribosome data; e.g., 5913-2_L2_ts003", type=str, required=True)
@@ -15,8 +17,10 @@ if __name__ == "__main__":
     radius = args.radius
     membrane_coordinates = args.membrane_coordinates
 
+    print("Before getting coordinates")
     # get ribosome coordinates
-    coordinates = ribosome_density.get_coordinates_json(tomogram)
+    coordinates = ribosome_density.get_coordinates(tomogram)
+    print("After getting coordinates")
 
     # shells_coords: shape is (# points per shell, 3 * # shells)
     shells_coords_input = np.loadtxt(membrane_coordinates, delimiter=",")
@@ -27,9 +31,15 @@ if __name__ == "__main__":
     
     avg_densities = []
 
+    print("Before getting avg_densities")
     for i in range(num_shells):
+        print("Shell {}".format(i))
         shell = list(map(tuple, shells_coords[i]))
         shell_density = ribosome_density.average_density(shell, coordinates, radius)
         avg_densities.append(shell_density)
+        print(avg_densities)
+    print("After getting avg_densities")
 
     print(avg_densities)
+    stop = timeit.default_timer()
+    print('Time: ', stop - start)

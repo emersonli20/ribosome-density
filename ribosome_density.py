@@ -4,6 +4,7 @@ from numpy import subtract
 import numpy as np
 import argparse
 import json
+import timeit
 
 def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
     list_of_coordinates = []
@@ -24,16 +25,16 @@ def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
         f.close()
     return list_of_coordinates
 
-def get_coordinates_json(filename: str):
-    coordinates = []
-    with open(filename) as f:
-        data = json.load(f)
+# def get_coordinates_json(filename: str):
+#     coordinates = []
+#     with open(filename) as f:
+#         data = json.load(f)
 
-    for point in data["boxes_3d"]:
-        coordinate = (point[0], point[1], point[2])
-        coordinates.append(coordinate)
+#     for point in data["boxes_3d"]:
+#         coordinate = (point[0], point[1], point[2])
+#         coordinates.append(coordinate)
 
-    return coordinates
+#     return coordinates
 
 def get_distance(c1: tuple[float, float, float], c2: tuple[float, float, float]) -> np.floating:
     return norm(subtract(c1, c2))
@@ -49,12 +50,14 @@ def get_density(point_of_interest: tuple[float, float, float], list_of_coordinat
 def average_density(points_of_interest: list[tuple[float,float,float]], list_of_coordinates: list[tuple[float,float,float]], threshold: float) -> float:
     n = len(points_of_interest)
     avg_density = 0.0;
-    for point in points_of_interest:
+    for i, point in enumerate(points_of_interest):
+        print("Point {}".format(i))
         avg_density += get_density(point, list_of_coordinates, threshold)[0] / n
     
     return avg_density
 
 if __name__ == "__main__":
+    start = timeit.default_timer()
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--tomogram", help="The name of the tomogram; e.g., 5913-2_L2_ts003, json", type=str, required=True)
@@ -73,7 +76,9 @@ if __name__ == "__main__":
 
     point_of_interest = (x,y,z)
 
-    coordinates = get_coordinates_json(tomogram)
+    coordinates = get_coordinates(tomogram)
     counter, distances = get_density(point_of_interest, coordinates, radius)
     print("counter: {}\n".format(counter))
     print("distances: {}\n".format(distances))
+
+    stop = timeit.default_timer()
