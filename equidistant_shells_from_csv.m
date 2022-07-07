@@ -8,7 +8,7 @@ adjusted_normals = get_adjusted_normals(ptcloud, 5,120);
 n = numel(adjusted_normals)/3
 
 % manually flip the rest of the upward-facing normals
-adjusted_normals = manually_flip_y(adjusted_normals);
+% adjusted_normals = manually_flip_y(adjusted_normals);
 show_normals(ptcloud, 5, adjusted_normals)
 % write final normals to csv
 csvwrite("adjusted_normals.csv", adjusted_normals);
@@ -19,7 +19,7 @@ shells = make_shells(mem, adjusted_normals, shell_number);
 filename  = sprintf('shells_coords_%d.csv',shell_number)
 csvwrite(filename,  shells);
 
-hold on
+% hold on
 % pcshow(ptcloud);
 
 % % visualization of shells
@@ -37,4 +37,3 @@ hold on
 % zlabel('z')
 % view([0,0,180])
 % hold off
-% 
