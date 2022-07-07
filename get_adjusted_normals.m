@@ -11,7 +11,7 @@ function adjusted_normals = get_adjusted_normals(ptcloud, stepsize, neighbors)
 
     n = numel(x);
 
-    sensorCenter = [0,-0.3,0.3]; %is this fixed??
+    sensorCenter = [-300,0,20]; %can change the coords
     for k = 1 : n
        p1 = sensorCenter - [x(k),y(k),z(k)];
        p2 = [u(k),v(k),w(k)];
