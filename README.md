@@ -67,5 +67,6 @@ python ribosome_density_from_membrane.py --help
 * change the parameters accordingly: 
      - compress_ratio: reduce the number of points used on the membrane
      - neighbors: number of nearest neighbors used for estimating the normals
-     - shell_numbers: number of shells wanted
+     - shell_number: number of shells wanted
 * run the matlab file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
+
