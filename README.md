@@ -52,7 +52,6 @@ python ribosome_density_from_membrane.py --help
 </p>
 
 
-
 ## Select Desired Membranes on MATLAB
 
 * open brushing.m
@@ -61,3 +60,12 @@ python ribosome_density_from_membrane.py --help
 * run brushing.m and click on the brushing tool in the figure, and select the membranes you want
 * go to tools-> brushing-> export brushed -> OK (do not need to change the variable name)
 * the coordinates of the selected membrane should be saved in a csvfile in the previously specified path
+
+## Create Equidistant Shells of Membranes
+* open equidistant_shells_from_csv.m
+* uncomment the first line and change the path to the output file from brushing.m
+* change the parameters accordingly: 
+*  compress_ratio: reduce the number of points used on the membrane
+*  neighbors: number of nearest neighbors used for estimating the normals
+*  shell_numbers: number of shells wanted
+* run the matlab file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
