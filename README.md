@@ -65,7 +65,7 @@ python ribosome_density_from_membrane.py --help
 * open equidistant_shells_from_csv.m
 * uncomment the first line and change the path to the output file from brushing.m
 * change the parameters accordingly: 
-     compress_ratio: reduce the number of points used on the membrane
-     neighbors: number of nearest neighbors used for estimating the normals
-     shell_numbers: number of shells wanted
+     - compress_ratio: reduce the number of points used on the membrane
+     - neighbors: number of nearest neighbors used for estimating the normals
+     - shell_numbers: number of shells wanted
 * run the matlab file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
