@@ -53,7 +53,7 @@ python ribosome_density_from_membrane.py --help
 
 
 
-### Select Desired Membranes on MATLAB
+## Select Desired Membranes on MATLAB
 ```
 * open brushing.m
 * uncomment the first line, and change the path to the csv file of all the coordinates from the hdf
