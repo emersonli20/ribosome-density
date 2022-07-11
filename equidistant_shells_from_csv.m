@@ -1,18 +1,18 @@
 % all_coords = csvread("coordinates_3.0.csv");
-mem = csvread("inner_mem_coords.csv");
+mem = csvread("/datadisk/cmholab3/tomography/20220120_5970-3_trophs/L5/eman2/ts001/inner_mem_1_coords.csv");
 
 % generate original pointcloud and normals
-ptcloud = pointCloud(mem);
-normals = pcnormals(ptcloud, 120);
-adjusted_normals = get_adjusted_normals(ptcloud, 5,120);
-n = numel(adjusted_normals)/3
-
+compress_ratio = 3
+mem_compressed = mem(1:press_ratio:end, 1:3);
+ptcloud = pointCloud(mem_compressed);
+normals = pcnormals(ptcloud, 400);
+adjusted_normals = get_adjusted_normals(ptcloud, normals);
+n = numel(adjusted_normals)/3 %number of mem points selected
 % manually flip the rest of the upward-facing normals
-% adjusted_normals = manually_flip_y(adjusted_normals);
-show_normals(ptcloud, 5, adjusted_normals)
+adjusted_normals = manually_flip_y(adjusted_normals);
+show_normals(ptcloud, adjusted_normals)
 % write final normals to csv
 csvwrite("adjusted_normals.csv", adjusted_normals);
-
 % generate shells, write to csv
 shell_number = 150
 shells = make_shells(mem, adjusted_normals, shell_number);
@@ -37,3 +37,5 @@ csvwrite(filename,  shells);
 % zlabel('z')
 % view([0,0,180])
 % hold off
+% 
+
