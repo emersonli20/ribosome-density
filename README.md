@@ -50,3 +50,7 @@ python ribosome_density_from_membrane.py --help
 <p align="center">
  <img src="https://github.com/emersonli20/ribosome-density/blob/master/5970_L5_ts001_densities_plot.png" alt="Ribosome density plot of 5970_L5_ts001" height=400 class="center">
 </p>
+
+
+
+###use matlab to select membrane
