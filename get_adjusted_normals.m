@@ -1,17 +1,16 @@
-function adjusted_normals = get_adjusted_normals(ptcloud, stepsize, neighbors)
+function adjusted_normals = get_adjusted_normals(ptcloud, normals)
     
-    normals = pcnormals(ptcloud, neighbors);
-    x= ptcloud.Location(1:stepsize:end, 1);
-    y= ptcloud.Location(1:stepsize:end, 2);
-    z= ptcloud.Location(1:stepsize:end, 3);
+    x= ptcloud.Location(1:end, 1);
+    y= ptcloud.Location(1:end, 2);
+    z= ptcloud.Location(1:end, 3);
 
-    u= normals(1:stepsize:end, 1);
-    v= normals(1:stepsize:end, 2);
-    w= normals(1:stepsize:end, 3);
+    u= normals(1:end, 1);
+    v= normals(1:end, 2);
+    w= normals(1:end, 3);
 
     n = numel(x);
 
-    sensorCenter = [-300,0,20]; %can change the coords
+    sensorCenter = [-100,-200,140]; %is this fixed??
     for k = 1 : n
        p1 = sensorCenter - [x(k),y(k),z(k)];
        p2 = [u(k),v(k),w(k)];

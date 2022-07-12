@@ -1,7 +1,7 @@
 # ribosome-density
 ## Install Dependencies
 ```
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 ## ribosome_density.py
 To view usage instructions:
@@ -50,3 +50,22 @@ python ribosome_density_from_membrane.py --help
 <p align="center">
  <img src="https://github.com/emersonli20/ribosome-density/blob/master/5970_L5_ts001_densities_plot.png" alt="Ribosome density plot of 5970_L5_ts001" height=400 class="center">
 </p>
+
+
+## Select Desired Membranes on MATLAB
+
+* open brushing.m
+* uncomment the first line, and change the path to the csv file of all the coordinates from the hdf
+* uncomment the last line, and change the path to the name of the csv file you want to create for the selected membrane
+* run brushing.m and click on the brushing tool in the figure, and select the membranes you want
+* go to tools-> brushing-> export brushed -> OK (do not need to change the variable name)
+* the coordinates of the selected membrane should be saved in a csvfile in the previously specified path
+
+## Create Equidistant Shells of Membranes
+* open equidistant_shells_from_csv.m
+* uncomment the first line and change the path to the output file from brushing.m
+* change the parameters accordingly: 
+     - compress_ratio: reduce the number of points used on the membrane
+     - neighbors: number of nearest neighbors used for estimating the normals
+     - shell_number: number of shells wanted (default shell stepsize is 1)
+* run the matlab file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
