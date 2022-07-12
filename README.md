@@ -1,7 +1,7 @@
 # ribosome-density
 ## Install Dependencies
 ```
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 ## ribosome_density.py
 To view usage instructions:
