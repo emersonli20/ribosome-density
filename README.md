@@ -67,7 +67,8 @@ python ribosome_density_from_membrane.py --help
      - compress_ratio: the higher the ratio, the fewer points reduce the number of points used on the membrane
      - neighbors: number of nearest neighbors used for estimating the normals
      - shell_number: number of shells wanted (default shell stepsize is 1)
-* run show_membrane.m
+* type and run this in the COMMAND WINDOW:
+```show_membrane.m ```
      - eyeball the coordinates for a sensorCenter
      - go back to equidistant_shells_from_csv.m and change the sensorCenter coordinates accordingly
 * check central slice image on benchling:
