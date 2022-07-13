@@ -45,16 +45,23 @@ def get_density(point_of_interest: tuple[float, float, float], list_of_coordinat
         distance = get_distance(c1, point_of_interest)
         if distance <= threshold:
             distances[c1] = distance
-    return len(distances), distances
+    return len(distances)
     
 def average_density(points_of_interest: list[tuple[float,float,float]], list_of_coordinates: list[tuple[float,float,float]], threshold: float) -> float:
     n = len(points_of_interest)
     avg_density = 0.0;
     for i, point in enumerate(points_of_interest):
-        print("Point {}".format(i))
-        avg_density += get_density(point, list_of_coordinates, threshold)[0] / n
+        #print("Point {}".format(i))
+        avg_density += get_density(point, list_of_coordinates, threshold) / n
     
     return avg_density
+
+def get_all_densities(points_of_interest: list[tuple[float,float,float]], list_of_coordinates: list[tuple[float,float,float]], threshold: float) -> list[float]:
+    all_densities = [];
+    for i, point in enumerate(points_of_interest):
+        all_densities.append(get_density(point, list_of_coordinates, threshold))
+
+    return all_densities
 
 if __name__ == "__main__":
     start = timeit.default_timer()
