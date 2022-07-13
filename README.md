@@ -59,6 +59,7 @@ python ribosome_density_from_membrane.py --help
 * run brushing.m and click on the brushing tool in the figure, and select the membranes you want
 * go to tools-> brushing-> export brushed -> OK (do not need to change the variable name)
 * uncomment the last line, and change the path to the name of the csv file you want to create for the selected membrane; the coordinates of the selected membrane should be saved in that csv file.
+* ***remember to eyeball the shell_number! 1/10 of the distance from membrane to the border of the tomogram, round up if unsure
 
 ## Create Equidistant Shells of Membranes
 * open equidistant_shells_from_csv.m
@@ -66,7 +67,7 @@ python ribosome_density_from_membrane.py --help
 * change the parameters accordingly: 
      - compress_ratio: the higher the ratio, the fewer points reduce the number of points used on the membrane
      - neighbors: number of nearest neighbors used for estimating the normals
-     - shell_number: number of shells wanted (default shell stepsize is 1)
+     - ***shell_number: number of shells wanted (default shell stepsize is 10)
 * run the entire file
 * afterwards, type and run this in the COMMAND WINDOW:
 ```show_normals(ptcloud, adjusted_normals) ```
