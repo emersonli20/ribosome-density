@@ -67,11 +67,12 @@ python ribosome_density_from_membrane.py --help
      - compress_ratio: the higher the ratio, the fewer points reduce the number of points used on the membrane
      - neighbors: number of nearest neighbors used for estimating the normals
      - shell_number: number of shells wanted (default shell stepsize is 1)
-* type and run this in the COMMAND WINDOW:
-```show_membrane.m ```
-     - eyeball the coordinates for a sensorCenter
-     - go back to equidistant_shells_from_csv.m and change the sensorCenter coordinates accordingly
+* run the entire file
+* afterwards, type and run this in the COMMAND WINDOW:
+```show_normals(ptcloud, adjusted_normals) ```
+     - eyeball the coordinates for a sensorCenter to which the normals should be oriented
+     - go back to equidistant_shells_from_csv.m and change the sensorCenter coordinates accordingly in line 13
 * check central slice image on benchling:
-     - if the membrane is relatively horizontal, uncomment the line below the OPTIONAL step to manually flip the normals
-     - if the ribosomes are above the membrane,uncomment the line starting with 'REVERSE'
-* run equidistant_shells_from_csv.m, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
+     - if the membrane is relatively horizontal, uncomment line 20
+     - if you want to save adjusted_normals to csv, uncomment line 22
+* run the entire equidistant_shells_from_csv.m file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
