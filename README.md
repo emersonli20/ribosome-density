@@ -56,16 +56,21 @@ python ribosome_density_from_membrane.py --help
 
 * open brushing.m
 * uncomment the first line, and change the path to the csv file of all the coordinates from the hdf
-* uncomment the last line, and change the path to the name of the csv file you want to create for the selected membrane
 * run brushing.m and click on the brushing tool in the figure, and select the membranes you want
 * go to tools-> brushing-> export brushed -> OK (do not need to change the variable name)
-* the coordinates of the selected membrane should be saved in a csvfile in the previously specified path
+* uncomment the last line, and change the path to the name of the csv file you want to create for the selected membrane; the coordinates of the selected membrane should be saved in that csv file.
 
 ## Create Equidistant Shells of Membranes
 * open equidistant_shells_from_csv.m
 * uncomment the first line and change the path to the output file from brushing.m
 * change the parameters accordingly: 
-     - compress_ratio: reduce the number of points used on the membrane
+     - compress_ratio: the higher the ratio, the fewer points reduce the number of points used on the membrane
      - neighbors: number of nearest neighbors used for estimating the normals
      - shell_number: number of shells wanted (default shell stepsize is 1)
-* run the matlab file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
+* run show_membrane.m
+     - eyeball the coordinates for a sensorCenter
+     - go back to equidistant_shells_from_csv.m and change the sensorCenter coordinates accordingly
+* check central slice image on benchling:
+     - if the membrane is relatively horizontal, uncomment the line below the OPTIONAL step to manually flip the normals
+     - if the ribosomes are above the membrane,uncomment the line starting with 'REVERSE'
+* run equidistant_shells_from_csv.m, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
