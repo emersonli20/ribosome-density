@@ -3,8 +3,9 @@ import numpy as np
 import h5py
 import argparse
 import json
+import os
 
-def get_coordinates(filename: str, z: int, threshold: float=5) -> list[tuple[int,int,int]]:
+def get_coordinates(filename: str, z: int, threshold: float=5):
     f = h5py.File(filename,'r')
     m = f['MDF']
     #PRINT(f.keys())
@@ -23,8 +24,9 @@ def get_coordinates(filename: str, z: int, threshold: float=5) -> list[tuple[int
     
     return membrane_coords
 
-def json_to_csv(membrane_coords: list[tuple[int,int,int]], threshold: float):
-    np.savetxt("coordinates_{}.csv".format(threshold), membrane_coords, delimiter=",")
+def json_to_csv(membrane_coords, threshold: float):
+    os.makedirs("membrane_coords", exist_ok=True)
+    np.savetxt("membrane_coords/coordinates_{}.csv".format(threshold), membrane_coords, delimiter=",")
     
 
 if __name__ == "__main__":
