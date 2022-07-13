@@ -69,10 +69,19 @@ python ribosome_density_from_membrane.py --help
      - shell_number: number of shells wanted (default shell stepsize is 1)
 * run the entire file
 * afterwards, type and run this in the COMMAND WINDOW:
-```show_normals(ptcloud, adjusted_normals) ```
+```
+show_normals(ptcloud, adjusted_normals) 
+```
      - eyeball the coordinates for a sensorCenter to which the normals should be oriented
      - go back to equidistant_shells_from_csv.m and change the sensorCenter coordinates accordingly in line 13
 * check central slice image on benchling:
      - if the membrane is relatively horizontal, uncomment line 20
      - if you want to save adjusted_normals to csv, uncomment line 22
-* run the entire equidistant_shells_from_csv.m file, and the output should be a csv file called 'shells_coords_%shellnumber.csv'
+* run the entire equidistant_shells_from_csv.m file, and the output should be a csv called 'pm/pvm/dv_shells_coords_%shell_number.csv'
+
+##getting the average densities csv and line plot
+* change the prefix (pm, pvm or dv) in the filenames in lines 54,57,60
+* run this in the folder of the segmentations of the particular tilt series of interest:
+```
+python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv
+```
