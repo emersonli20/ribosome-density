@@ -5,7 +5,6 @@ compress_ratio = 20;
 neighbors = 400;
 shell_number = 200;
 
-
 mem_compressed = mem(1:compress_ratio:end, 1:3);
 ptcloud = pointCloud(mem_compressed);
 normals = pcnormals(ptcloud, neighbors);
@@ -23,7 +22,7 @@ n = numel(adjusted_normals)/3 %number of mem points selected
 % csvwrite("adjusted_normals.csv", adjusted_normals);
 
 % generate shells, write to csv
-shells = make_shells(mem_compressed, adjusted_normals, shell_number);
+stepsize = 10 % default shell stepsize = 10
+shells = make_shells(mem_compressed, adjusted_normals, shell_number, stepsize);
 filename  = sprintf('/datadisk/cmholab3/tomography/20220120_5970-3_trophs/L5/eman2/ts001/segmentations/pm_shells_coords_%d.csv',shell_number)
-
 csvwrite(filename,  shells);
