@@ -21,7 +21,7 @@ def membrane_distances(coordinates: np.ndarray):
     
     return distances
 
-def distance_filter(distances: np.ndarray, radius: float, threshold = float):
+def distance_filter(distances: np.ndarray, radius: float, threshold: float):
     distances[distances > radius] = 0
     count_matrix = np.count_nonzero(distances, axis=0)
     boolean_array = count_matrix > threshold

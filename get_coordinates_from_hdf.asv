@@ -24,7 +24,7 @@ def get_coordinates(filename: str, z: int, threshold: float=5) -> list[tuple[int
     return membrane_coords
 
 def json_to_csv(membrane_coords: list[tuple[int,int,int]], threshold: float):
-    np.savetxt("coordinates_{}.csv".format(threshold), membrane_coords, delimiter=",")
+    np.savetxt("coordinates_{}.csv".format(threshold), cartesian_coordinates, delimiter=",")
     
 
 if __name__ == "__main__":
@@ -38,6 +38,26 @@ if __name__ == "__main__":
     filename = args.filename
     threshold = args.threshold
     z = args.z_range
+
+    # f = h5py.File(filename,'r')
+    # m = f['MDF']
+    # #PRINT(f.keys())
+    # dataset = m['images']['0']['image']
+    # arr = np.array(dataset)
+
+    # arr = arr.reshape(z,-1)
+    # df = pd.DataFrame(arr)
+    # non_zero_indices = df[df>threshold].stack().index.tolist()
+    # non_zero_coords = []
+    # for value in non_zero_indices:
+    #     z = value[0]
+    #     y = value[1] // 686
+    #     x = value[1] - y * 686
+    #     non_zero_coords.append((x,y,z))
+
     membrane_coords = get_coordinates(filename, z, threshold)
 
-    json_to_csv(membrane_coords, threshold)
+#     jsonString = json.dumps(membrane_coords)
+#     jsonFile = open("coords.json","w")
+#     jsonFile.write(jsonString)
+#     jsonFile.close()
