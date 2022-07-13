@@ -80,8 +80,7 @@ show_normals(ptcloud, adjusted_normals)
 * run the entire equidistant_shells_from_csv.m file, and the output should be a csv called 'pm/pvm/dv_shells_coords_%shell_number.csv'
 
 ## getting the average densities csv and line plot
-* change the prefix (pm, pvm or dv) in the filenames in lines 54,57,60
 * run this in the folder of the segmentations of the particular tilt series of interest:
 ```
-python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv
+python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv -mt *insert pv/pvm/dv*
 ```
