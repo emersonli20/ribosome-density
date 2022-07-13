@@ -1,4 +1,4 @@
-function adjusted_normals = get_adjusted_normals(ptcloud, normals)
+function adjusted_normals = get_adjusted_normals(ptcloud, normals, sensorCenter)
     
     x= ptcloud.Location(1:end, 1);
     y= ptcloud.Location(1:end, 2);
@@ -10,7 +10,6 @@ function adjusted_normals = get_adjusted_normals(ptcloud, normals)
 
     n = numel(x);
 
-    sensorCenter = [-100,-200,140]; %is this fixed??
     for k = 1 : n
        p1 = sensorCenter - [x(k),y(k),z(k)];
        p2 = [u(k),v(k),w(k)];
