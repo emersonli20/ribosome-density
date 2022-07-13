@@ -1,7 +1,9 @@
 import ribosome_density
 import numpy as np
+import pandas as pd
 import argparse
 import timeit
+import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     start = timeit.default_timer()
@@ -32,14 +34,22 @@ if __name__ == "__main__":
     avg_densities = []
 
     print("Before getting avg_densities")
+    
     for i in range(num_shells):
         print("Shell {}".format(i))
         shell = list(map(tuple, shells_coords[i]))
         shell_density = ribosome_density.average_density(shell, ribosome_coordinates, radius)
         avg_densities.append(shell_density)
         print(avg_densities)
+        
     print("After getting avg_densities")
 
     print(avg_densities)
     stop = timeit.default_timer()
     print('Time: ', stop - start)
+    
+    #df = pd.read_csv('shells_ribosome_densities.csv', sep=',', header=None);
+    df = pd.DataFrame(avg_densities, header = None)
+    df = df.T
+    df.plot()
+    plt.show()
