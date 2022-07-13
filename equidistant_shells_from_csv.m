@@ -1,5 +1,5 @@
-% all_coords = csvread("coordinates_3.0.csv");
-mem = csvread("/path of pv/pvm/dv membrane coords.csv");
+% mem = csvread("/path of pv/pvm/dv membrane coords.csv");
+
 % generate original pointcloud and normals
 compress_ratio = 3;
 neighbors = 400;
