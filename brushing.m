@@ -9,4 +9,6 @@ zlabel('z')
 view([0,0,180])
 axis equal
 
-% csvwrite("/datadisk/cmholab3/tomography/*path", brushedData)
+% path = insert_desired_output_path_of_selected_membrane
+
+csvwrite("20220121_5970_L5_ts002/plasma_mem.csv", brushedData)

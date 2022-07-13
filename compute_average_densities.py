@@ -45,12 +45,17 @@ if __name__ == "__main__":
     print("After getting avg_densities")
 
     print(avg_densities)
+    
     stop = timeit.default_timer()
     print('Time: ', stop - start)
     
     #save densities to csv file 
     arr = np.array(avg_densities);
+<<<<<<< HEAD
     np.savetxt('pm_shells_densities.csv', arr, delimiter =',');
+=======
+    np.savetxt('shells_densities.csv', arr, delimiter =',');
+>>>>>>> 1f90843 (update files for membrane selection and shells)
     
     #plot density wrt distance from membrane 
     df = pd.read_csv('pm_densities', sep=',', header=None);

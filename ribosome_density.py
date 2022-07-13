@@ -6,7 +6,7 @@ import argparse
 import json
 import timeit
 
-def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
+def get_coordinates(tomogram: str): #-> list[tuple[float, float, float]]:
     list_of_coordinates = []
     x = 0
     y = 0
@@ -36,10 +36,10 @@ def get_coordinates(tomogram: str) -> list[tuple[float, float, float]]:
 
 #     return coordinates
 
-def get_distance(c1: tuple[float, float, float], c2: tuple[float, float, float]) -> np.floating:
+def get_distance(c1, c2): # -> np.floating:
     return norm(subtract(c1, c2))
 
-def get_density(point_of_interest: tuple[float, float, float], list_of_coordinates: list[tuple[float, float, float]], threshold: float) -> tuple[int, dict[tuple[float,float,float], int]]:
+def get_density(point_of_interest, list_of_coordinates, threshold: float): #-> tuple[int, dict[tuple[float,float,float], int]]:
     distances = {}
     for c1 in list_of_coordinates:
         distance = get_distance(c1, point_of_interest)
@@ -47,7 +47,7 @@ def get_density(point_of_interest: tuple[float, float, float], list_of_coordinat
             distances[c1] = distance
     return len(distances)
     
-def average_density(points_of_interest: list[tuple[float,float,float]], list_of_coordinates: list[tuple[float,float,float]], threshold: float) -> float:
+def average_density(points_of_interest, list_of_coordinates, threshold: float): # -> float:
     n = len(points_of_interest)
     avg_density = 0.0;
     for i, point in enumerate(points_of_interest):
@@ -56,7 +56,7 @@ def average_density(points_of_interest: list[tuple[float,float,float]], list_of_
     
     return avg_density
 
-def get_all_densities(points_of_interest: list[tuple[float,float,float]], list_of_coordinates: list[tuple[float,float,float]], threshold: float) -> list[float]:
+def get_all_densities(points_of_interest, list_of_coordinates, threshold: float): #-> list[float]:
     all_densities = [];
     for i, point in enumerate(points_of_interest):
         all_densities.append(get_density(point, list_of_coordinates, threshold))
