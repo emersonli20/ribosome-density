@@ -50,7 +50,7 @@ if __name__ == "__main__":
     
     #save densities to csv file 
     arr = np.array(avg_densities);
-    np.savetxt('shells_densities.csv', arr, delimiter =',');
+    np.savetxt('pm_shells_densities.csv', arr, delimiter =',');
     
     #plot density wrt distance from membrane 
     df = pd.read_csv('pm_densities', sep=',', header=None);
