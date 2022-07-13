@@ -7,6 +7,7 @@ ylabel('y')
 zlabel('z')
 
 view([0,0,180])
+axis equal
 
 % path = insert_desired_output_path_of_selected_membrane
 
