@@ -79,7 +79,7 @@ show_normals(ptcloud, adjusted_normals)
      - if you want to save adjusted_normals to csv, uncomment line 22
 * run the entire equidistant_shells_from_csv.m file, and the output should be a csv called 'pm/pvm/dv_shells_coords_%shell_number.csv'
 
-##getting the average densities csv and line plot
+## getting the average densities csv and line plot
 * change the prefix (pm, pvm or dv) in the filenames in lines 54,57,60
 * run this in the folder of the segmentations of the particular tilt series of interest:
 ```
