@@ -48,8 +48,12 @@ if __name__ == "__main__":
     stop = timeit.default_timer()
     print('Time: ', stop - start)
     
-    #df = pd.read_csv('shells_ribosome_densities.csv', sep=',', header=None);
-    df = pd.DataFrame(avg_densities, header = None)
-    df = df.T
+    #save densities to csv file 
+    arr = np.array(avg_densities);
+    np.savetxt('shells_densities.csv', arr, delimiter =',');
+    
+    #plot density wrt distance from membrane 
+    df = pd.read_csv('pm_densities', sep=',', header=None);
+    print(df)
     df.plot()
-    plt.show()
+    plt.savefig('pm_plot.png')
