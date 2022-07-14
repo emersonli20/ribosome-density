@@ -12,14 +12,14 @@ if __name__ == "__main__":
 
     parser.add_argument("--tomogram", help="The name of the tomogram, contains ribosome data; e.g., 5913-2_L2_ts003", type=str, required=True)
     parser.add_argument("--radius", help="The radius of the sphere", type=float, required=True)
-    parser.add_argument("-m", "--membrane_coordinates", help="The csv file containing membrane coordinates", type=str, required=True)
+    parser.add_argument("-s", "--shell_coordinates", help="The csv file containing shell coordinates", type=str, required=True)
     parser.add_argument("-o", "--output", help="The name of the output csv file containing shell densities (include .csv in it)", type=str, required=True)
 
     args = parser.parse_args()
 
     tomogram = args.tomogram
     radius = args.radius
-    membrane_coordinates = args.membrane_coordinates
+    shell_coordinates = args.shell_coordinates
     output = args.output
 
     print("Before getting coordinates")
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     print("After getting coordinates")
 
     # shells_coords: shape is (# points per shell, 3 * # shells)
-    shells_coords_input = np.loadtxt(membrane_coordinates, delimiter=",")
+    shells_coords_input = np.loadtxt(shell_coordinates, delimiter=",")
     n, m = shells_coords_input.shape
 
     num_shells = int(m/3)
