@@ -51,6 +51,16 @@ python ribosome_density_from_membrane.py --help
  <img src="https://github.com/emersonli20/ribosome-density/blob/master/5970_L5_ts001_densities_plot.png" alt="Ribosome density plot of 5970_L5_ts001" height=400 class="center">
 </p>
 
+## Convert HDF to CSV
+
+* run 3dmod on the desired tomogram to see what the z-range is
+```
+3dmod [path_to_tomogram]
+```
+* run get_coordinates_from_hdf.py with threshold 1 and the z-range you've just obtained
+```
+python3 get_coordinates_from_hdf.py -f [path_to_tomogram] -t 1 -z [z-range from 3dmod]
+```
 
 ## Select Desired Membranes on MATLAB
 
