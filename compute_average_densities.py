@@ -13,7 +13,6 @@ if __name__ == "__main__":
     parser.add_argument("--tomogram", help="The name of the tomogram, contains ribosome data; e.g., 5913-2_L2_ts003", type=str, required=True)
     parser.add_argument("--radius", help="The radius of the sphere", type=float, required=True)
     parser.add_argument("-m", "--membrane_coordinates", help="The csv file containing membrane coordinates", type=str, required=True)
-    parser.add_argument("-t", "--membrane_type", help="pv, pvm or dv", type=str, required=True) 
     parser.add_argument("-o", "--output", help="The name of the output csv file containing shell densities (include .csv in it)", type=str, required=True)
 
     args = parser.parse_args()
@@ -21,7 +20,6 @@ if __name__ == "__main__":
     tomogram = args.tomogram
     radius = args.radius
     membrane_coordinates = args.membrane_coordinates
-    membrane_type = args.membrane_type
     output = args.output
 
     print("Before getting coordinates")
@@ -56,4 +54,4 @@ if __name__ == "__main__":
 
     #save densities to csv file 
     arr = np.array(avg_densities);
-    np.savetxt('{mt}_shells_densities.csv'.format(membrane_type), arr, delimiter =',');
+    np.savetxt(output, arr, delimiter =',');
