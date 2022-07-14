@@ -4,6 +4,7 @@ import pandas as pd
 import argparse
 import timeit
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 if __name__ == "__main__":
     start = timeit.default_timer()
@@ -13,6 +14,7 @@ if __name__ == "__main__":
     parser.add_argument("--radius", help="The radius of the sphere", type=float, required=True)
     parser.add_argument("-m", "--membrane_coordinates", help="The csv file containing membrane coordinates", type=str, required=True)
     parser.add_argument("-t", "--membrane_type", help="pv, pvm or dv", type=str, required=True) 
+    parser.add_argument("-o", "--output", help="The name of the output csv file containing shell densities (include .csv in it)", type=str, required=True)
 
     args = parser.parse_args()
 
@@ -20,6 +22,7 @@ if __name__ == "__main__":
     radius = args.radius
     membrane_coordinates = args.membrane_coordinates
     membrane_type = args.membrane_type
+    output = args.output
 
     print("Before getting coordinates")
     # get ribosome coordinates
@@ -37,14 +40,14 @@ if __name__ == "__main__":
     avg_densities = []
 
     print("Before getting avg_densities")
-
-    for i in range(num_shells):
-        print("Shell {}".format(i))
+    
+    for i in tqdm(range(num_shells)):
+#         print("Shell {}".format(i))
         shell = list(map(tuple, shells_coords[i]))
         shell_density = ribosome_density.average_density(shell, ribosome_coordinates, radius)
         avg_densities.append(shell_density)
-        print(avg_densities)
-
+#         print(avg_densities)
+        
     print("After getting avg_densities")
 
     print(avg_densities)
