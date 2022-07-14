@@ -1,4 +1,8 @@
-mem = csvread("/datadisk/cmholab3/tomography/20220120_5970-3_trophs/L5/eman2/ts001/segmentations/plasma_mem.csv");
+% variables to pass from command line
+read_file = r;
+write_file = w;
+
+mem = csvread(read_file);
 
 % generate original pointcloud and normals
 compress_ratio = 20;
@@ -24,5 +28,5 @@ n = numel(adjusted_normals)/3 %number of mem points selected
 % generate shells, write to csv
 stepsize = 10 % default shell stepsize = 10
 shells = make_shells(mem_compressed, adjusted_normals, shell_number, stepsize);
-filename  = sprintf('/datadisk/cmholab3/tomography/20220120_5970-3_trophs/L5/eman2/ts001/segmentations/pm_shells_coords_%d.csv',shell_number)
+filename  = sprintf('%s%d.csv', write_file, shell_number)
 csvwrite(filename,  shells);

@@ -1,4 +1,8 @@
-% all_coords = csvread("/datadisk/cmholab3/tomography/20220120_5970-3_trophs/L5/eman2/ts001/inner_mem_1_coords.csv");
+% variables to pass from command line
+read_file = r;
+write_file = w;
+
+all_coords = csvread(read_file);
 
 plot3(all_coords(:,1), all_coords(:,2), all_coords(:,3),'.')
 
@@ -11,4 +15,4 @@ axis equal
 
 % path = insert_desired_output_path_of_selected_membrane
 
-csvwrite("20220121_5970_L5_ts002/plasma_mem.csv", brushedData)
+csvwrite(write_file, brushedData)
