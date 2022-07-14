@@ -24,9 +24,10 @@ def get_coordinates(filename: str, z: int, threshold: float=5):
     
     return membrane_coords
 
-def json_to_csv(membrane_coords, threshold: float):
+def list_to_csv(membrane_coords, filename):
     os.makedirs("membrane_coords", exist_ok=True)
-    np.savetxt("membrane_coords/coordinates_{}.csv".format(threshold), membrane_coords, delimiter=",")
+    new_filename = filename[:-3] + "csv"
+    np.savetxt("membrane_coords/{}".format(new_filename), membrane_coords, delimiter=",")
     
 
 if __name__ == "__main__":
@@ -42,4 +43,4 @@ if __name__ == "__main__":
     z = args.z_range
     membrane_coords = get_coordinates(filename, z, threshold)
 
-    json_to_csv(membrane_coords, threshold)
+    list_to_csv(membrane_coords, threshold)
