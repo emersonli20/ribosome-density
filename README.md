@@ -93,4 +93,10 @@ python3 get_coordinates_from_hdf.py -f [path_to_tomogram] -t 1 -z [z-range from 
 ```
 python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv -mt *insert pv/pvm/dv*
 ```
-
+## Membrane Segmentation using Matlab Brushing
+### Curve Fitter
+* use curveFitter tool from Matlab command window to fit a curve to x, y, and z point cloud data
+### create_membrane_boundaries
+* Use the fitted surface to generate two boundary surfaces on the edge of the membrane
+* Generates normals from points on the original surface and uses these normals to create the boundary surfaces
+* Saves coordinates of new surfaces?
