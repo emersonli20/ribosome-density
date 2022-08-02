@@ -26,6 +26,7 @@ def get_coordinates(filename: str, z: int, threshold: float=5):
 
 def list_to_csv(membrane_coords, filename):
     os.makedirs("membrane_coords", exist_ok=True)
+    filename = filename.split("/")[-1]
     new_filename = filename[:-3] + "csv"
     np.savetxt("membrane_coords/{}".format(new_filename), membrane_coords, delimiter=",")
     
@@ -43,4 +44,4 @@ if __name__ == "__main__":
     z = args.z_range
     membrane_coords = get_coordinates(filename, z, threshold)
 
-    list_to_csv(membrane_coords, threshold)
+    list_to_csv(membrane_coords, filename)
