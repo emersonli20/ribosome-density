@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import h5py
 
 #3d dataset of voxels
 # d = np.zeros((960,686,256))
@@ -55,12 +56,12 @@ indices = np.nonzero(d)
 # z_i = indices[0]
 x_i = indices[1]
 y_i = indices[2]
-z_i = indices[0]
 
 #next step: convert csv to hdf
+h5f = h5py.File('data.h5', 'w')
+h5f.create_dataset('dataset_1', data = d)
 
-
-#testing purposes
+# testing purposes 
 # fig = plt.figure()
 # ax = plt.axes(projection='3d')
 # ax.scatter3D(x_i, y_i,z_i);
