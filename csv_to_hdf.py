@@ -12,7 +12,8 @@ args = parser.parse_args()
 x_dim = args.x_dim
 
 arr = np.loadtxt("filled_membrane.csv", delimiter=",")
-arr = arr.reshape(arr.shape[0], -1, x_dim)
+arr = arr.reshape(arr.shape[0], x_dim, -1)
+arr = arr.transpose(0,2,1)
 
 print(arr.shape)
 
