@@ -5,6 +5,7 @@ y_max = max(y)
 z_min = min(z)
 z_max = max(z)
 
+% load coefficients
 coeffs = coeffvalues(centralSurface)
 p00 = coeffs(1)
 p10 = coeffs(2)
@@ -15,15 +16,18 @@ p30 = coeffs(6)
 p21 = coeffs(7)
 p40 = coeffs(8)
 p31 = coeffs(9)
+% end of load coefficients
 
 grid = int16.empty(0,3)
 
+% create grid
 for i = x_min : 20 : x_max
     for j = y_min : 20 : y_max
         k = p00 + p10 * i + p01 * j + p20 * i^2 + p11 * i * j + p30 * i^3 + p21 * i^2 * j + p40 * i^4 + p31 * i^3 * j
         grid = vertcat(grid, [i,j,k])
     end
 end
+% end of create grid
 
 grid = double(grid)
 idx = grid(:,3) >= z_min & grid(:,3) <= z_max

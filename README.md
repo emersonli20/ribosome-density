@@ -94,9 +94,61 @@ python3 get_coordinates_from_hdf.py -f [path_to_tomogram] -t 1 -z [z-range from 
 python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv -mt *insert pv/pvm/dv*
 ```
 ## Membrane Segmentation using Matlab Brushing
-### Curve Fitter
-* use curveFitter tool from Matlab command window to fit a curve to x, y, and z point cloud data
-### create_membrane_boundaries
-* Use the fitted surface to generate two boundary surfaces on the edge of the membrane
-* Generates normals from points on the original surface and uses these normals to create the boundary surfaces
-* Saves coordinates of new surfaces?
+### 1. Brushing
+* If you only have an hdf file of the segmentation, use **get_coordinates_from_hdf.py** to convert it to a csv file
+* Open **brushing.m**
+* Uncomment the "load prebrushed coordinates" section and the "plot and write coordinates" section, and comment the "load postbrushed coordinates section"
+* Load your csv file of unbrushed coordinates (from **get_coordinates_from_hdf.py**; shape n x 3)
+```
+pre_brushed = csvread("[name of your unbrushed coordinates file]")
+```
+* In the last line of **brushing.m**, set the path of your output from the brushing, as well as the name of the brushed data variable in the matlab
+```
+csvwrite("[output path for csv]",[name of brushed data variable in matlab workspace])
+```
+* Run **brushing.m** from the matlab command prompt
+* Use the brushing tool (explained above) to select your membrane and save in the matching brushed data variable
+* Uncomment the "load postbrushed coordinates section" and comment everything else"
+* Run **brushing.m** from the matlab command prompt again 
+
+### 2. Curve Fitter: Fitting the Central Surface
+* Use **curveFitter** tool from Matlab command window to fit a surface to x, y, and z point cloud data
+* Determine which type of polynomial function best fits the data
+* Export the fitted surface to workspace and name it "centralSurface"
+### 3. Create the Central Surface Grid
+* Open **membrane_grid.m**
+* In the "load coefficients" and "create grid" sections, unpack the surface coefficients according to what degree polynomial you used
+* In the last line containing "csvwrite", set the name of your output csv containing your central grid coordinates
+* Run **membrane_grid.m** from the matlab command prompt
+### 4. Creating the Boundary Surface Grids
+* Open **create_membrane_boundaries.m**
+* In the 1st line, load your csv file containing the central membrane grid by setting the csvwrite argument
+* In the last lines, set the output file name of the csv containing the coordinates of your boundary surface grids
+* Run **create_membrane_boundaries.m** from the matlab command prompt
+### 5. Curve Fitter: Fitting the Boundary Surfaces
+* Open **plot_membrane_boundaries.m**
+* Uncomment the load membrane grid section and comment everything else
+* In the 1st line, load your csv file containing the boundary membrane grids by setting the csvwrite argument
+* Run **plot_membrane_boundaries.m** from the matlab command prompt
+* Run **curveFitter** from the matlab command line and fit surface1 and surface2 using (x1,y1,z1) and (x2,y2,z2) respectively
+* Export surface1 and surface2 the workspace
+### 6. Save Boundary Surface Coordinates
+* Open **fill_membrane.m**
+* Adjust the unpacked coefficients based on the degree of the polynomial you used for the surface fits
+* Run **fill_membrane.m** from the matlab command prompt
+### 7. Create Membrane Filling
+* Open **fill_grid.py**
+* Adjust the number of coefficients based on polynomial degree
+* Set the output filenames
+  * filled membrane file (used to convert to hdf)
+  * indices file (used to visualize membrane in python/matlab)
+* Run **fill_grid.py**
+* Run **csv_to_hdf.py**, pass the x_dim (~686), output (.h5 file), and filename (filled membrane csv from fill_grid.py) as command line arguments
+### 8.a. Matlab Visualization
+* Open **plot_membrane_boundaries.m**
+* Uncomment everything
+* Run **plot_membrane_boundaries.m**
+### 8.b. ChimeraX Visualization
+```
+chimerax [output .h5 file from csv_to_hdf.py]
+```
