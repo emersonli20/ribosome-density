@@ -9,3 +9,4 @@ filled_membrane.csv
 *.h5
 *.hdf
 indices.csv
+fill_membrane.py

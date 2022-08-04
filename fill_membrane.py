@@ -20,11 +20,10 @@ print(coeffs_1.shape)
 print(coeffs_2.shape)
 
 x_range = np.arange(x_min,x_max+1)
-# print(x_range.shape)
+print(x_range.shape)
 y_range = np.arange(y_min,y_max+1)
-# print(y_range.shape)
+print(y_range.shape)
 z_range = np.arange(z_min,z_max+1)
-# print(z_range.shape)
 
 x_grid = x_range[:,None] + np.zeros((y_range.shape[0]))
 print(x_grid.shape)
