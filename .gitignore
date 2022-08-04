@@ -2,5 +2,13 @@
 *.h5
 *.hdf
 *.json
-membran_coords/
 hide/
+shells_coords_50.csv
+shells_coords_150.csv
+segmentations/
+membrane_coords/
+20220121_5970_L5_ts002/
+20220121_5970_L5_ts003/
+220105_5991-2_L2_ts004/
+filled_membrane.csv
+indices.csv

@@ -17,7 +17,6 @@ bottom_coeffs = coeffs_2 if coeffs_1[0] > coeffs_2[0] else coeffs_1
 print("top_coeffs: {}".format(top_coeffs))
 print("bottom_coeffs: {}".format(bottom_coeffs))
 
-
 #create a grid
 # TODO: change these to 441, 844, 250 since we only the range where the ribosome points exist?
 # translate these to start from 0?

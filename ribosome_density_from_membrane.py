@@ -36,5 +36,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     membrane_data_filename = args.membrane_data_filename
-Footer
-
