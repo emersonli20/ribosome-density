@@ -11,17 +11,17 @@ def get_coordinates(filename: str, z: int, threshold: float=5):
     #PRINT(f.keys())
     dataset = m['images']['0']['image']  # type: ignore
     arr = np.array(dataset)
-
     arr = arr.reshape(z,-1)
     df = pd.DataFrame(arr)
     membrane_indices = df[df>threshold].stack().index.tolist()
     membrane_coords = []
+    x_list, y_list, z_list = [], [], []
     for value in membrane_indices:
         z = value[0]
         y = value[1] // 686
         x = value[1] - y * 686
         membrane_coords.append((x,y,z))
-    
+
     return membrane_coords
 
 def list_to_csv(membrane_coords, filename):

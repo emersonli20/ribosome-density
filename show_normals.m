@@ -13,7 +13,8 @@ function show_normals(ptcloud,normals)
     xlabel('x');
     ylabel('y');
     zlabel('z');
-    view([0,0,180])
 
+    axis equal
+    view([0,0,180])
     hold off
 end

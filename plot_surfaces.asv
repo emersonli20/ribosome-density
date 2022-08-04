@@ -1,0 +1,36 @@
+x_min = min(x)
+x_max = max(x)
+y_min = min(y)
+y_max = max(y)
+z_min = min(z)
+z_max = max(z)
+
+% surface_pts = matrix(x_max-x_min+1, y_max-y_min+1)
+
+coeffs = coeffvalues(centralsurface)
+p00 = coeffs(1)
+p10 = coeffs(2)
+p01 = coeffs(3)
+p20 = coeffs(4)
+p11 = coeffs(5)
+
+grid = int16.empty(0,3)
+
+for i = x_min : x_max
+    for j = y_min : y_max
+        k = p00 + p10 * i - 1.4 * j + p20 * i^2 - 0.001 * i * j
+        grid = vertcat(grid, [i,j,k])
+
+x_grid = grid(0,:)
+y_d
+plot(surface1, [x, y], z)
+
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis equal
+view([0,0,180])
+        
+
+        
+

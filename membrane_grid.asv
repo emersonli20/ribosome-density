@@ -1,0 +1,47 @@
+x_min = min(x)
+x_max = max(x)
+y_min = min(y)
+y_max = max(y)
+z_min = min(z)
+z_max = max(z)
+
+coeffs = coeffvalues(centralsurface)
+p00 = coeffs(1)
+p10 = coeffs(2)
+p01 = coeffs(3)
+p20 = coeffs(4)
+p11 = coeffs(5)
+p30 = coeffs(6)
+p21 = coeffs(7)
+p40 = coeffs()
+
+grid = int16.empty(0,3)
+
+for i = x_min : 20 : x_max
+    for j = y_min : 20 : y_max
+        k = p00 + p10 * i + p01 * j + p20 * i^2 + p11 * i * j + p30 * i^3 + p21 * i^2 * j + p40 * i^4 + p31 * i^3 * j
+        grid = vertcat(grid, [i,j,k])
+    end
+end
+
+grid = double(grid)
+idx = grid(:,3) >= z_min & grid(:,3) <= z_max
+grid = grid(idx,:)
+
+x_grid = grid(:,1)
+y_grid = grid(:,2)
+z_grid = grid(:,3)
+
+plot(centralsurface, [x_grid, y_grid], z_grid)
+
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis equal
+view([0,0,180])
+
+csvwrite("5991_L2_ts004_central_membrane_grid.csv", grid)
+        
+
+        
+
