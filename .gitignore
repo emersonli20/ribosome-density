@@ -1,0 +1,6 @@
+*.csv
+*.h5
+*.hdf
+*.json
+membran_coords/
+hide/

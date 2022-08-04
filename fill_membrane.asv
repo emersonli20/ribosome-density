@@ -1,0 +1,11 @@
+coeffs_1 = coeffvalues(surface1)
+coeffs_2 = coeffvalues(surface2)
+
+
+for i = x_min : 20 : x_max
+    for j = y_min : 20 : y_max
+        for k = z_min  : 20 : z_max
+            
+        end
+    end
+end
