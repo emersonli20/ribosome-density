@@ -94,10 +94,26 @@ python3 get_coordinates_from_hdf.py -f [path_to_tomogram] -t 1 -z [z-range from 
 python3 /*insert path/compute_average_densities.py --tomogram *insert tomogram, e.g. 5970_L5_ts001* --radius *insert radius of sphere* -m *insert pm/pvm/dv_shells_coords*.csv -mt *insert pv/pvm/dv*
 ```
 ## Membrane Segmentation using Matlab Brushing
+### TL;DR:
+0. get_coordinates_from_hdf.py
+1. brushing.m
+2. load_postbrushed_coordinates.m
+3. curveFitter (central surface)
+4. membrane_grid.m
+5. create_membrane_boundaries.m
+6. load_boundary_grids.m
+7. curveFitter (boundary surfaces)
+8. save_coeffs.m
+9. fill_grid.py
+10. csv_to_hdf.py
+
+Plotting:
+* Matlab: plot_membrane_boundaries.m
+* ChimeraX: chimerax [hf filename]
+
 ### 1. Brushing
 * If you only have an hdf file of the segmentation, use **get_coordinates_from_hdf.py** to convert it to a csv file
 * Open **brushing.m**
-* Uncomment the "load prebrushed coordinates" section and the "plot and write coordinates" section, and comment the "load postbrushed coordinates section"
 * Load your csv file of unbrushed coordinates (from **get_coordinates_from_hdf.py**; shape n x 3)
 ```
 pre_brushed = csvread("[name of your unbrushed coordinates file]")
@@ -108,8 +124,7 @@ csvwrite("[output path for csv]",[name of brushed data variable in matlab worksp
 ```
 * Run **brushing.m** from the matlab command prompt
 * Use the brushing tool (explained above) to select your membrane and save in the matching brushed data variable
-* Uncomment the "load postbrushed coordinates section" and comment everything else"
-* Run **brushing.m** from the matlab command prompt again 
+* Run **load_postbrushed_coordinates.m** from the matlab command prompt 
 
 ### 2. Curve Fitter: Fitting the Central Surface
 * Use **curveFitter** tool from Matlab command window to fit a surface to x, y, and z point cloud data
@@ -126,12 +141,11 @@ csvwrite("[output path for csv]",[name of brushed data variable in matlab worksp
 * In the last lines, set the output file name of the csv containing the coordinates of your boundary surface grids
 * Run **create_membrane_boundaries.m** from the matlab command prompt
 ### 5. Curve Fitter: Fitting the Boundary Surfaces
-* Open **plot_membrane_boundaries.m**
-* Uncomment the load membrane grid section and comment everything else
+* Open **load_boundary_grids.m**
 * In the 1st line, load your csv file containing the boundary membrane grids by setting the csvwrite argument
-* Run **plot_membrane_boundaries.m** from the matlab command prompt
+* Run **load_boundary_grids.m** from the matlab command prompt
 * Run **curveFitter** from the matlab command line and fit surface1 and surface2 using (x1,y1,z1) and (x2,y2,z2) respectively
-* Export surface1 and surface2 the workspace
+* Export surface1 and surface2 to the workspace
 ### 6. Save Boundary Surface Coordinates
 * Open **fill_membrane.m**
 * Adjust the unpacked coefficients based on the degree of the polynomial you used for the surface fits
