@@ -139,6 +139,7 @@ csvwrite("[output path for csv]",[name of brushed data variable in matlab worksp
 * Open **create_membrane_boundaries.m**
 * In the 1st line, load your csv file containing the central membrane grid by setting the csvwrite argument
 * In the last lines, set the output file name of the csv containing the coordinates of your boundary surface grids
+* change the sensorCenter
 * Run **create_membrane_boundaries.m** from the matlab command prompt
 ### 5. Curve Fitter: Fitting the Boundary Surfaces
 * Open **load_boundary_grids.m**
@@ -147,9 +148,9 @@ csvwrite("[output path for csv]",[name of brushed data variable in matlab worksp
 * Run **curveFitter** from the matlab command line and fit surface1 and surface2 using (x1,y1,z1) and (x2,y2,z2) respectively
 * Export surface1 and surface2 to the workspace
 ### 6. Save Boundary Surface Coordinates
-* Open **fill_membrane.m**
+* Open **save_coeffs.m**
 * Adjust the unpacked coefficients based on the degree of the polynomial you used for the surface fits
-* Run **fill_membrane.m** from the matlab command prompt
+* Run **save_coeffs.m** from the matlab command prompt
 ### 7. Create Membrane Filling
 * Open **fill_grid.py**
 * Adjust the number of coefficients based on polynomial degree
