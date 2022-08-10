@@ -5,21 +5,21 @@ import argparse
 import json
 import os
 
-def get_coordinates(filename: str, x: int, z: int, threshold: float=5):
+def get_coordinates(filename: str, x_range: int, z_range: int, threshold: float=5):
     f = h5py.File(filename,'r')
     m = f['MDF']
     #PRINT(f.keys())
     dataset = m['images']['0']['image']  # type: ignore
     arr = np.array(dataset)
-    arr = arr.reshape(z,-1)
+    arr = arr.reshape(z_range,-1)
     df = pd.DataFrame(arr)
     membrane_indices = df[df>threshold].stack().index.tolist()
     membrane_coords = []
     x_list, y_list, z_list = [], [], []
     for value in membrane_indices:
         z = value[0]
-        y = value[1] // x
-        x = value[1] - y * x
+        y = value[1] // x_range
+        x = value[1] - y * x_range
         membrane_coords.append((x,y,z))
 
     return membrane_coords
